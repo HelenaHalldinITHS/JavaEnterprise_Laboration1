@@ -12,12 +12,11 @@ public class StudentService {
     @PersistenceContext
     EntityManager entityManager;
 
-    public Student createStudent(Student student){
+    public void createStudent(Student student) {
         entityManager.persist(student);
-        return student;
     }
 
-    public Student findStudentById(Long id){
+    public Student findStudentById(Long id) {
         return entityManager.find(Student.class, id);
     }
 }
