@@ -29,4 +29,9 @@ public class StudentService {
         entityManager.merge(student);
     }
 
+    public void deleteStudent(Long id) {
+        Student student = findStudentById(id);
+        entityManager.remove(student);
+    }
+
 }
