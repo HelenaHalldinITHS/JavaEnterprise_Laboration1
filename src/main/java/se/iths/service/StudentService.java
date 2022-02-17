@@ -25,4 +25,8 @@ public class StudentService {
         return entityManager.createQuery("SELECT s from Student s", Student.class).getResultList();
     }
 
+    public void updateStudent(Student student) {
+        entityManager.merge(student);
+    }
+
 }

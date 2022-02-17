@@ -38,4 +38,11 @@ public class StudentRest {
         return Response.ok(students).build();
     }
 
+    @Path("update")
+    @PUT
+    public Response updateStudent(Student student) {
+        studentService.updateStudent(student);
+        return Response.ok(student).build();
+    }
+
 }
