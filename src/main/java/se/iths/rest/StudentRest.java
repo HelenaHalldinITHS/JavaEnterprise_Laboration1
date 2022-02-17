@@ -52,4 +52,11 @@ public class StudentRest {
         return Response.ok().build();
     }
 
+    @Path("get")
+    @GET
+    public Response findStudentByLastName(@QueryParam("lastName") String lastName) {
+        List<Student> students = studentService.findStudentsByLastName(lastName);
+        return Response.ok(students).build();
+    }
+
 }
