@@ -6,8 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +23,7 @@ public class StudentService {
 
     public Student findStudentById(Long id) {
         Optional<Student> student = Optional.ofNullable(entityManager.find(Student.class, id));
-        return student.orElseThrow(() -> new WebApplicationException(Response.status(Response.Status.NOT_FOUND).build()));
+        return student.orElseThrow(NotFoundException::new);
     }
 
     public List<Student> findAllStudents() {
@@ -33,12 +32,12 @@ public class StudentService {
 
     public void updateStudent(Student student) {
         Optional<Student> optionalStudent = Optional.ofNullable(findStudentById(student.getId()));
-        entityManager.merge(optionalStudent.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND)));
+        entityManager.merge(optionalStudent.orElseThrow(NotFoundException::new));
     }
 
     public void deleteStudent(Long id) {
         Optional<Student> student = Optional.ofNullable(findStudentById(id));
-        entityManager.remove(student.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND)));
+        entityManager.remove(student.orElseThrow(NotFoundException::new));
     }
 
     public List<Student> findStudentsByLastName(String lastName) {
