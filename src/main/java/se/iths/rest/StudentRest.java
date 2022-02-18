@@ -25,7 +25,7 @@ public class StudentRest {
         try {
             studentService.createStudent(student);
         } catch (TransactionalException e) {
-            throw new ConflictException("A student with id " + student.getId() + " already exist");
+            throw new ConflictException("A student with id " + student.getId() + " already exist and therefor can't be added");
         }
         return Response.created(URI.create("http://localhost:8080/student-management-system/api/v1/students/" + student.getId())).build();
     }
