@@ -4,6 +4,7 @@ import se.iths.entity.Student;
 import se.iths.service.StudentService;
 
 import javax.inject.Inject;
+import javax.transaction.TransactionalException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,8 +21,12 @@ public class StudentRest {
 
     @POST
     public Response createStudent(Student student) {
-        studentService.createStudent(student);
-        return Response.created(URI.create("http://localhost:8080/student-management-system/api/v1/students/" + student.getId())).build();
+        try {
+            studentService.createStudent(student);
+            return Response.created(URI.create("http://localhost:8080/student-management-system/api/v1/students/" + student.getId())).build();
+        } catch (TransactionalException e) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }
     }
 
     @Path("{id}")
