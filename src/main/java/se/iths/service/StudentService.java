@@ -6,7 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
 
 @Transactional
@@ -27,8 +30,9 @@ public class StudentService {
         return entityManager.createQuery("SELECT s from Student s", Student.class).getResultList();
     }
 
-    public void updateStudent(Student student) {
-        entityManager.merge(student);
+    public void updateStudent(Student student){
+        Optional<Student> optionalStudent = Optional.ofNullable(findStudentById(student.getId()));
+        entityManager.merge(optionalStudent.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND)));
     }
 
     public void deleteStudent(Long id) {
