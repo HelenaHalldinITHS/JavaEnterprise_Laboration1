@@ -9,19 +9,23 @@ public class ErrorMessage {
         this.statusCode = statusCode;
     }
 
+    public ErrorMessage(){}
+
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public ErrorMessage setMessage(String message) {
         this.message = message;
+        return this;
     }
 
     public int getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(int statusCode) {
+    public ErrorMessage setStatusCode(int statusCode) {
         this.statusCode = statusCode;
+        return this;
     }
 }
