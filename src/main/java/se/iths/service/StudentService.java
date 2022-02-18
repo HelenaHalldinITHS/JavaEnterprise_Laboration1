@@ -6,8 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 
@@ -18,9 +16,7 @@ public class StudentService {
     EntityManager entityManager;
 
     public void createStudent(Student student) {
-        if (findStudentById(student.getId()) != null)
-            throw new WebApplicationException(Response.Status.CONFLICT);
-        entityManager.persist(student);
+            entityManager.persist(student);
     }
 
     public Student findStudentById(Long id) {

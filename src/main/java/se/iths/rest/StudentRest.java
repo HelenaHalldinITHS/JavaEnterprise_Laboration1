@@ -21,20 +21,17 @@ public class StudentRest {
     @POST
     public Response createStudent(Student student) {
         studentService.createStudent(student);
-        return Response.created(URI
-                .create("http://localhost:8080/student-management-system/api/v1/students/" + student.getId()))
-                .build();
+        return Response.created(URI.create("http://localhost:8080/student-management-system/api/v1/students/" + student.getId())).build();
     }
 
     @Path("{id}")
     @GET
     public Response findStudentById(@PathParam("id") Long id) {
         Student student = studentService.findStudentById(id);
-        if (student == null){
-            throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
-                    .entity("Student with ID " + id + " was not found in database.").type(MediaType.TEXT_PLAIN_TYPE).build());
-        }
-        return Response.ok(student).build();
+        if (student == null) {
+            throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND).build());
+        } else
+            return Response.ok(student).build();
     }
 
     @GET
