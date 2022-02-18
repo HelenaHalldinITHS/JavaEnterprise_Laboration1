@@ -19,18 +19,19 @@ public class StudentService {
     EntityManager entityManager;
 
     public void createStudent(Student student) {
-            entityManager.persist(student);
+        entityManager.persist(student);
     }
 
     public Student findStudentById(Long id) {
-        return entityManager.find(Student.class, id);
+        Optional<Student> student = Optional.ofNullable(entityManager.find(Student.class, id));
+        return student.orElseThrow(() -> new WebApplicationException(Response.status(Response.Status.NOT_FOUND).build()));
     }
 
     public List<Student> findAllStudents() {
         return entityManager.createQuery("SELECT s from Student s", Student.class).getResultList();
     }
 
-    public void updateStudent(Student student){
+    public void updateStudent(Student student) {
         Optional<Student> optionalStudent = Optional.ofNullable(findStudentById(student.getId()));
         entityManager.merge(optionalStudent.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND)));
     }
