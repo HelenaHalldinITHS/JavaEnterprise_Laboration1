@@ -7,7 +7,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class ConflictExceptionMapper implements ExceptionMapper<ConflictException> {
+public class ConflictMapper implements ExceptionMapper<ConflictException> {
 
     @Override
     public Response toResponse(ConflictException e) {

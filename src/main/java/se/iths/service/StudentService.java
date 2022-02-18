@@ -23,7 +23,7 @@ public class StudentService {
 
     public Student findStudentById(Long id) {
         Optional<Student> student = Optional.ofNullable(entityManager.find(Student.class, id));
-        return student.orElseThrow(NotFoundException::new);
+        return student.orElseThrow(() -> new NotFoundException("A student with id " + id + " doesn't exist"));
     }
 
     public List<Student> findAllStudents() {
