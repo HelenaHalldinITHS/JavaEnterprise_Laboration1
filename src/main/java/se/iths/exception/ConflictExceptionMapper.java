@@ -1,5 +1,7 @@
 package se.iths.exception;
 
+import se.iths.message.ErrorMessage;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -9,6 +11,9 @@ public class ConflictExceptionMapper implements ExceptionMapper<ConflictExceptio
 
     @Override
     public Response toResponse(ConflictException e) {
-        return Response.status(Response.Status.CONFLICT).build();
+        ErrorMessage errorMessage = new ErrorMessage()
+                .setStatusCode(Response.Status.CONFLICT.getStatusCode())
+                .setMessage(e.getMessage());
+        return Response.status(Response.Status.CONFLICT).entity(errorMessage).build();
     }
 }
