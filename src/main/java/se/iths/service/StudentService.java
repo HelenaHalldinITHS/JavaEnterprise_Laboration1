@@ -32,12 +32,12 @@ public class StudentService {
 
     public void updateStudent(Student student) {
         Optional<Student> optionalStudent = Optional.ofNullable(findStudentById(student.getId()));
-        entityManager.merge(optionalStudent.orElseThrow(NotFoundException::new));
+        entityManager.merge(optionalStudent.orElseThrow(() -> new NotFoundException("A student with id " + student.getId() + " doesn't exist")));
     }
 
     public void deleteStudent(Long id) {
         Optional<Student> student = Optional.ofNullable(findStudentById(id));
-        entityManager.remove(student.orElseThrow(NotFoundException::new));
+        entityManager.remove(student.orElseThrow(() -> new NotFoundException("A student with id " + id + " doesn't exist")));
     }
 
     public List<Student> findStudentsByLastName(String lastName) {
