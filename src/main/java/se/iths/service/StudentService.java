@@ -36,8 +36,8 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
-        Student student = findStudentById(id);
-        entityManager.remove(student);
+        Optional<Student> student = Optional.ofNullable(findStudentById(id));
+        entityManager.remove(student.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND)));
     }
 
     public List<Student> findStudentsByLastName(String lastName) {
