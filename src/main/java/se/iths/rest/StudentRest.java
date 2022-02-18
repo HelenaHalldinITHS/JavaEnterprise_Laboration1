@@ -1,6 +1,7 @@
 package se.iths.rest;
 
 import se.iths.entity.Student;
+import se.iths.exception.ConflictException;
 import se.iths.service.StudentService;
 
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class StudentRest {
             studentService.createStudent(student);
             return Response.created(URI.create("http://localhost:8080/student-management-system/api/v1/students/" + student.getId())).build();
         } catch (TransactionalException e) {
-            return Response.status(Response.Status.CONFLICT).build();
+            throw new ConflictException();
         }
     }
 
