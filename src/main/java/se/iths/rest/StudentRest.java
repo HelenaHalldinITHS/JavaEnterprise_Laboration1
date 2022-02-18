@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.List;
 
 @Path("students")
@@ -20,7 +21,9 @@ public class StudentRest {
     @POST
     public Response createStudent(Student student) {
         studentService.createStudent(student);
-        return Response.ok(student).build();
+        return Response.created(URI
+                .create("http://localhost:8080/student-management-system/api/v1/students/" + student.getId()))
+                .build();
     }
 
     @Path("{id}")
