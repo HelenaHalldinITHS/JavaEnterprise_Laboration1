@@ -6,9 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Transactional
@@ -22,8 +20,7 @@ public class StudentService {
     }
 
     public Student findStudentById(Long id) {
-        Optional<Student> student = Optional.ofNullable(entityManager.find(Student.class, id));
-        return student.orElseThrow(() -> new NotFoundException("A student with id " + id + " doesn't exist"));
+        return entityManager.find(Student.class, id);
     }
 
     public List<Student> findAllStudents() {
@@ -31,13 +28,14 @@ public class StudentService {
     }
 
     public void updateStudent(Student student) {
-        Optional<Student> optionalStudent = Optional.ofNullable(findStudentById(student.getId()));
-        entityManager.merge(optionalStudent.orElseThrow(() -> new NotFoundException("A student with id " + student.getId() + " doesn't exist and therefor can't be updated")));
+        Student foundStudent = findStudentById(student.getId());
+        entityManager.merge(foundStudent);
     }
 
     public void deleteStudent(Long id) {
-        Optional<Student> student = Optional.ofNullable(findStudentById(id));
-        entityManager.remove(student.orElseThrow(() -> new NotFoundException("A student with id " + id + " doesn't exist and therefor can't be deleted")));
+        Student student = findStudentById(id);
+        entityManager.remove(student);
+
     }
 
     public List<Student> findStudentsByLastName(String lastName) {

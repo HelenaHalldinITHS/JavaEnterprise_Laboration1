@@ -33,7 +33,10 @@ public class StudentRest {
     @Path("{id}")
     @GET
     public Response findStudentById(@PathParam("id") Long id) {
+
         Student student = studentService.findStudentById(id);
+        if (student == null)
+            throw new NotFoundException("A student with id " + id + " doesn't exist");
         return Response.ok(student).build();
     }
 
@@ -46,14 +49,23 @@ public class StudentRest {
 
     @PUT
     public Response updateStudent(Student student) {
-        studentService.updateStudent(student);
+        try {
+            studentService.updateStudent(student);
+        } catch (IllegalArgumentException e) {
+            throw new NotFoundException("A student with id " + student.getId() + " doesn't exist and therefor can't be updated");
+        }
+
         return Response.ok(student).build();
     }
 
     @Path("{id}")
     @DELETE
     public Response deleteStudent(@PathParam("id") Long id) {
-        studentService.deleteStudent(id);
+        try {
+            studentService.deleteStudent(id);
+        } catch (IllegalArgumentException e) {
+            throw new NotFoundException("A student with id " + id + " doesn't exist and therefor can't be deleted");
+        }
         return Response.ok().build();
     }
 
