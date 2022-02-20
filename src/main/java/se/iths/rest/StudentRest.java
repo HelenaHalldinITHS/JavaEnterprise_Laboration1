@@ -7,8 +7,7 @@ import se.iths.service.StudentService;
 import javax.inject.Inject;
 import javax.transaction.TransactionalException;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
 
@@ -21,13 +20,14 @@ public class StudentRest {
     StudentService studentService;
 
     @POST
-    public Response createStudent(Student student) {
+    public Response createStudent(Student student, @Context UriInfo uriInfo) {
         try {
             studentService.createStudent(student);
         } catch (TransactionalException e) {
             throw new ConflictException("A student with id " + student.getId() + " already exist and therefor can't be added");
         }
-        return Response.created(URI.create("http://localhost:8080/student-management-system/api/v1/students/" + student.getId())).build();
+        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder().path(Long.toString(student.getId()));
+        return Response.created(uriBuilder.build()).build();
     }
 
     @Path("{id}")
