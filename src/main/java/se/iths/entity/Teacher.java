@@ -15,6 +15,15 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     private List<Subject> subjects = new ArrayList<>();
 
+    public void addSubject(Subject subject){
+        subjects.add(subject);
+        subject.setTeacher(this);
+    }
+
+    public void removeSubject(Subject subject){
+        subjects.remove(subject);
+        subject.setTeacher(null);
+    }
 
     @JsonbTransient
     public List<Subject> getSubjects() {
