@@ -33,14 +33,17 @@ public class StudentRest {
     @GET
     public Response findStudentById(@PathParam("id") Long id) {
         Student student = studentService.findStudentById(id);
-        if (student == null)
-            throw new NotFoundException("A student with id " + id + " doesn't exist");
+        if (student == null) throw new NotFoundException("A student with id " + id + " doesn't exist");
         return Response.ok(student).build();
     }
 
     @GET
-    public Response findAllStudents() {
-        List<Student> students = studentService.findAllStudents();
+    public Response findAllStudents(@QueryParam("lastName") String lastName) {
+        List<Student> students;
+        if (lastName != null)
+            students = studentService.findStudentsByLastName(lastName);
+        else
+            students = studentService.findAllStudents();
         return Response.ok(students).build();
     }
 
@@ -63,13 +66,6 @@ public class StudentRest {
             throw new NotFoundException("A student with id " + id + " doesn't exist and therefor can't be deleted");
         }
         return Response.ok().build();
-    }
-
-    @Path("get")
-    @GET
-    public Response findStudentByLastName(@QueryParam("lastName") String lastName) {
-        List<Student> students = studentService.findStudentsByLastName(lastName);
-        return Response.ok(students).build();
     }
 
 }
