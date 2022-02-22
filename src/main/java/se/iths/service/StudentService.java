@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Transactional
@@ -18,8 +19,8 @@ public class StudentService {
         entityManager.persist(student);
     }
 
-    public Student findStudentById(Long id) {
-        return entityManager.find(Student.class, id);
+    public Optional<Student> findStudentById(Long id) {
+        return Optional.ofNullable(entityManager.find(Student.class, id));
     }
 
     public List<Student> findAllStudents() {
@@ -27,13 +28,13 @@ public class StudentService {
     }
 
     public void updateStudent(Student student) {
-        Student foundStudent = findStudentById(student.getId());
-        entityManager.merge(foundStudent);
+        Optional<Student> foundStudent = findStudentById(student.getId());
+        entityManager.merge(foundStudent.orElseThrow(IllegalArgumentException::new));
     }
 
     public void deleteStudent(Long id) {
-        Student student = findStudentById(id);
-        entityManager.remove(student);
+        Optional<Student> student = findStudentById(id);
+        entityManager.remove(student.orElseThrow(IllegalArgumentException::new));
     }
 
     public List<Student> findStudentsByLastName(String lastName) {

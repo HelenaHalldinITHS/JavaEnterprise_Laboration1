@@ -9,6 +9,7 @@ import javax.transaction.TransactionalException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
+import java.util.Optional;
 
 @Path("students")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -32,8 +33,9 @@ public class StudentRest {
     @Path("{id}")
     @GET
     public Response findStudentById(@PathParam("id") Long id) {
-        Student student = studentService.findStudentById(id);
-        if (student == null) throw new NotFoundException("A student with id " + id + " doesn't exist");
+        Optional<Student> student = studentService.findStudentById(id);
+        if (student.isEmpty())
+            throw new NotFoundException("A student with id " + id + " doesn't exist");
         return Response.ok(student).build();
     }
 
