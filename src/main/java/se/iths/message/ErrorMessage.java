@@ -9,7 +9,8 @@ public class ErrorMessage {
         this.statusCode = statusCode;
     }
 
-    public ErrorMessage(){}
+    public ErrorMessage() {
+    }
 
     public String getMessage() {
         return message;
@@ -28,4 +29,5 @@ public class ErrorMessage {
         this.statusCode = statusCode;
         return this;
     }
+
 }

@@ -4,7 +4,6 @@ import se.iths.entity.Student;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -35,14 +34,12 @@ public class StudentService {
     public void deleteStudent(Long id) {
         Student student = findStudentById(id);
         entityManager.remove(student);
-
     }
 
     public List<Student> findStudentsByLastName(String lastName) {
-        TypedQuery<Student> query = entityManager
-                .createQuery("SELECT s FROM Student s WHERE s.lastName = :lastName", Student.class);
-        query.setParameter("lastName", lastName);
-        return query.getResultList();
+        return entityManager.createQuery("SELECT s FROM Student s WHERE s.lastName = :lastName", Student.class)
+                .setParameter("lastName", lastName)
+                .getResultList();
     }
 
 }

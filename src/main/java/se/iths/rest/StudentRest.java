@@ -32,7 +32,6 @@ public class StudentRest {
     @Path("{id}")
     @GET
     public Response findStudentById(@PathParam("id") Long id) {
-
         Student student = studentService.findStudentById(id);
         if (student == null)
             throw new NotFoundException("A student with id " + id + " doesn't exist");
@@ -45,7 +44,6 @@ public class StudentRest {
         return Response.ok(students).build();
     }
 
-
     @PUT
     public Response updateStudent(Student student) {
         try {
@@ -53,7 +51,6 @@ public class StudentRest {
         } catch (IllegalArgumentException e) {
             throw new NotFoundException("A student with id " + student.getId() + " doesn't exist and therefor can't be updated");
         }
-
         return Response.ok(student).build();
     }
 

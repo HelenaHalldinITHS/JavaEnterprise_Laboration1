@@ -16,4 +16,5 @@ public class ConflictMapper implements ExceptionMapper<ConflictException> {
                 .setMessage(e.getMessage());
         return Response.status(Response.Status.CONFLICT).entity(errorMessage).build();
     }
+
 }
