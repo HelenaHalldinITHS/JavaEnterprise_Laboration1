@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.transaction.TransactionalException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.net.URI;
 import java.util.List;
 
 @Path("students")
