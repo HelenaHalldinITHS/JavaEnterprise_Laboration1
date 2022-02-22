@@ -1,9 +1,6 @@
 package se.iths.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Subject {
@@ -11,6 +8,16 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String name;
+    @ManyToOne
+    Teacher teacher;
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 
     public Long getId() {
         return id;
