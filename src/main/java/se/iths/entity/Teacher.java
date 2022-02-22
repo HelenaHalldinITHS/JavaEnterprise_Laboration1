@@ -1,6 +1,5 @@
 package se.iths.entity;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,6 @@ public class Teacher {
         subject.setTeacher(null);
     }
 
-    @JsonbTransient
     public List<Subject> getSubjects() {
         return subjects;
     }
