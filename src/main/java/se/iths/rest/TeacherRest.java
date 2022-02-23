@@ -33,7 +33,7 @@ public class TeacherRest {
         try {
             teacherService.createTeacher(teacher);
         } catch (TransactionalException e) {
-            throw new ConflictException("A Teacher with id " + teacher.getId() + " already exist and therefor can't be added");
+            throw new ConflictException("..."); //Could either be that the teacher already exists or that I'm trying to add a course that already has a teacher
         }
         UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder().path(Long.toString(teacher.getId()));
         return Response.created(uriBuilder.build()).build();
