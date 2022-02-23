@@ -1,10 +1,9 @@
 package se.iths.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @Entity
 public class Student {
@@ -18,6 +17,21 @@ public class Student {
     @NotEmpty
     private String email;
     private String phoneNumber;
+    @ManyToMany
+    @JoinTable(
+            name="Student_Subject",
+            joinColumns=@JoinColumn(name="Student_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="Subject_id", referencedColumnName="id"))
+    private Set<Subject> subjects;
+
+    @JsonbTransient
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
+    }
 
     public Long getId() {
         return id;

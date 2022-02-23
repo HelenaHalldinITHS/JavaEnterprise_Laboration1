@@ -1,6 +1,8 @@
 package se.iths.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Subject {
@@ -10,6 +12,17 @@ public class Subject {
     private String name;
     @ManyToOne
     private Teacher teacher;
+    @ManyToMany(mappedBy = "subjects")
+    private Set<Student> students;
+
+    @JsonbTransient
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
 
     public Teacher getTeacher() {
         return teacher;
