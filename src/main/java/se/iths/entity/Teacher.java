@@ -11,7 +11,7 @@ public class Teacher {
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //I do not want to remove a subject if it has no teacher (for the moment)
     private List<Subject> subjects = new ArrayList<>();
 
     public void addSubject(Subject subject){
