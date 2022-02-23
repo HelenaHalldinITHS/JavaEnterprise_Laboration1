@@ -6,10 +6,10 @@ import javax.persistence.*;
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    String name;
+    private Long id;
+    private String name;
     @ManyToOne
-    Teacher teacher;
+    private Teacher teacher;
 
     public Teacher getTeacher() {
         return teacher;

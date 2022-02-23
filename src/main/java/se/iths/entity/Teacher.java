@@ -8,7 +8,7 @@ import java.util.List;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
     private String firstName;
     private String lastName;
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
