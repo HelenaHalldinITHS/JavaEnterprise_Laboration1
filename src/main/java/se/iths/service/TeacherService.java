@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class TeacherService {
@@ -20,4 +21,14 @@ public class TeacherService {
     public List<Teacher> findAllTeachers() {
         return entityManager.createQuery("SELECT t from Teacher t", Teacher.class).getResultList();
     }
+
+    public Optional<Teacher> findTeacherById(Long id) {
+        return Optional.ofNullable(entityManager.find(Teacher.class, id));
+    }
+
+    public void deleteTeacher(Long id) {
+        Optional<Teacher> teacher = findTeacherById(id);
+        entityManager.remove(teacher.orElseThrow(IllegalArgumentException::new));
+    }
+
 }
