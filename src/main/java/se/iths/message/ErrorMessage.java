@@ -1,15 +1,29 @@
 package se.iths.message;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 public class ErrorMessage {
     private String message;
-    private int statusCode;
+    private int status;
+    private String error;
+    private Timestamp timestamp = Timestamp.from(Instant.now());
 
-    public ErrorMessage(String message, int statusCode) {
-        this.message = message;
-        this.statusCode = statusCode;
+    public String getError() {
+        return error;
     }
 
-    public ErrorMessage() {
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public ErrorMessage setError(String error) {
+        this.error = error;
+        return this;
     }
 
     public String getMessage() {
@@ -21,12 +35,12 @@ public class ErrorMessage {
         return this;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public int getStatus() {
+        return status;
     }
 
-    public ErrorMessage setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public ErrorMessage setStatus(int status) {
+        this.status = status;
         return this;
     }
 

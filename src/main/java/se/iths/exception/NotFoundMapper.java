@@ -13,8 +13,9 @@ public class NotFoundMapper implements ExceptionMapper<NotFoundException> {
     @Override
     public Response toResponse(NotFoundException e) {
         ErrorMessage errorMessage = new ErrorMessage()
-                .setStatusCode(Response.Status.NOT_FOUND.getStatusCode())
-                .setMessage(e.getMessage());
+                .setStatus(Response.Status.NOT_FOUND.getStatusCode())
+                .setMessage(e.getMessage())
+                .setError(Response.Status.NOT_FOUND.getReasonPhrase());
         return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
     }
 

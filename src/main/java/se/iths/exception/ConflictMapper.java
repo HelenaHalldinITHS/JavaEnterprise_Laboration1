@@ -12,8 +12,9 @@ public class ConflictMapper implements ExceptionMapper<ConflictException> {
     @Override
     public Response toResponse(ConflictException e) {
         ErrorMessage errorMessage = new ErrorMessage()
-                .setStatusCode(Response.Status.CONFLICT.getStatusCode())
-                .setMessage(e.getMessage());
+                .setStatus(Response.Status.CONFLICT.getStatusCode())
+                .setMessage(e.getMessage())
+                .setError(Response.Status.CONFLICT.getReasonPhrase());
         return Response.status(Response.Status.CONFLICT).entity(errorMessage).build();
     }
 
