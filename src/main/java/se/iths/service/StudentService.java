@@ -27,9 +27,11 @@ public class StudentService {
         return entityManager.createQuery("SELECT s from Student s", Student.class).getResultList();
     }
 
-    public void updateStudent(Student student) {
-        Optional<Student> foundStudent = findStudentById(student.getId());
-        entityManager.merge(foundStudent.orElseThrow(IllegalArgumentException::new));
+    public void updateStudent(Student student, Long id) {
+        if (findStudentById(id).isEmpty())
+            throw new IllegalArgumentException();
+        student.setId(id);
+        entityManager.merge(student);
     }
 
     public void deleteStudent(Long id) {

@@ -49,10 +49,11 @@ public class StudentRest {
         return Response.ok(students).build();
     }
 
+    @Path("{id}")
     @PUT
-    public Response updateStudent(Student student) {
+    public Response updateStudent(@PathParam("id") Long id, Student student) {
         try {
-            studentService.updateStudent(student);
+            studentService.updateStudent(student, id);
         } catch (IllegalArgumentException e) {
             throw new NotFoundException("A student with id " + student.getId() + " doesn't exist and therefor can't be updated");
         }
