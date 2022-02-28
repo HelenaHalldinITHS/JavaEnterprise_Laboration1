@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class SubjectService {
@@ -19,6 +20,10 @@ public class SubjectService {
 
     public List<Subject> findAllSubjects() {
         return entityManager.createQuery("SELECT s from Subject s", Subject.class).getResultList();
+    }
+
+    public Optional<Subject> findById(Long id){
+        return Optional.ofNullable(entityManager.find(Subject.class, id));
     }
 
 }

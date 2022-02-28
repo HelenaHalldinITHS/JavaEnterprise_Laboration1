@@ -6,14 +6,13 @@ import se.iths.service.SubjectService;
 
 import javax.inject.Inject;
 import javax.transaction.TransactionalException;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
+import java.util.Optional;
 
 @Path("subjects")
 public class SubjectRest {
@@ -38,6 +37,15 @@ public class SubjectRest {
     public Response findAllSubjects(){
         List<Subject> subjects = subjectService.findAllSubjects();
         return Response.ok(subjects).build();
+    }
+
+    @Path("{id}")
+    @GET
+    public Response findById(@PathParam("id") Long id){
+        Optional<Subject> subject = subjectService.findById(id);
+        if (subject.isEmpty())
+            throw new NotFoundException("A subject with id " + id + " doesn't exist");
+        return Response.ok(subject).build();
     }
 
 }
