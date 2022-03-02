@@ -34,18 +34,39 @@ public class SubjectRest {
 
     @Path("")
     @GET
-    public Response findAllSubjects(){
+    public Response findAllSubjects() {
         List<Subject> subjects = subjectService.findAllSubjects();
         return Response.ok(subjects).build();
     }
 
     @Path("{id}")
     @GET
-    public Response findById(@PathParam("id") Long id){
+    public Response findById(@PathParam("id") Long id) {
         Optional<Subject> subject = subjectService.findById(id);
         if (subject.isEmpty())
             throw new NotFoundException("A subject with id " + id + " doesn't exist");
         return Response.ok(subject).build();
     }
 
+    @Path("{id}")
+    @PUT
+    public Response updateSubject(@PathParam("id") Long id, Subject subject) {
+        try {
+            subjectService.updateSubject(subject, id);
+        } catch (IllegalArgumentException e) {
+            throw new NotFoundException("A subject with id " + subject.getId() + " doesn't exist and therefor can't be updated");
+        }
+        return Response.ok(subject).build();
+    }
+
+    @Path("{id}")
+    @DELETE
+    public Response deleteSubject(@PathParam("id") Long id) {
+        try {
+            subjectService.deleteSubject(id);
+        } catch (IllegalArgumentException e) {
+            throw new NotFoundException("A subject with id " + id + " doesn't exist and therefor can't be deleted");
+        }
+        return Response.ok().build();
+    }
 }

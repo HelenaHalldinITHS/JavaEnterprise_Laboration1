@@ -26,4 +26,16 @@ public class SubjectService {
         return Optional.ofNullable(entityManager.find(Subject.class, id));
     }
 
+    public void updateSubject(Subject subject, Long id) {
+        if (findById(id).isEmpty())
+            throw new IllegalArgumentException();
+        subject.setId(id);
+        entityManager.merge(subject);
+
+    }
+
+    public void deleteSubject(Long id) {
+        Optional<Subject> subject = findById(id);
+        entityManager.remove(subject.orElseThrow(IllegalArgumentException::new));
+    }
 }
