@@ -2,6 +2,7 @@ package se.iths.entity;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Subject {
     @ManyToOne
     private Teacher teacher;
     @ManyToMany(mappedBy = "subjects")
-    private Set<Student> students;
+    private Set<Student> students = new HashSet<>();
 
     @JsonbTransient
     public Set<Student> getStudents() {

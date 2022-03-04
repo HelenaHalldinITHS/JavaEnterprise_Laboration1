@@ -1,6 +1,7 @@
 package se.iths.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ public class Teacher {
     private String firstName;
     private String lastName;
     @OneToMany(mappedBy = "teacher", cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //I do not want to remove a subject if it has no teacher (for the moment)
-    private Set<Subject> subjects;
+    private Set<Subject> subjects = new HashSet<>();
 
     public void addSubject(Subject subject){
         subjects.add(subject);
