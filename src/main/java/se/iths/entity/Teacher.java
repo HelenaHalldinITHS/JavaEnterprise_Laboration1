@@ -1,5 +1,6 @@
 package se.iths.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,19 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher", cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //I do not want to remove a subject if it has no teacher (for the moment)
     private Set<Subject> subjects = new HashSet<>();
 
+    public Teacher(String firstName, String lastName, Set<Subject> subjects) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.subjects = subjects;
+    }
+
+    public Teacher(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Teacher() {}
+
     public void addSubject(Subject subject){
         subjects.add(subject);
         subject.setTeacher(this);
@@ -24,6 +38,7 @@ public class Teacher {
         subject.setTeacher(null);
     }
 
+    @JsonbTransient
     public Set<Subject> getSubjects() {
         return subjects;
     }
