@@ -1,6 +1,5 @@
 package se.iths.entity;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +15,23 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects")
     private Set<Student> students = new HashSet<>();
 
-    @JsonbTransient
+    public Subject(String name, Teacher teacher, Set<Student> students) {
+        this.name = name;
+        this.teacher = teacher;
+        this.students = students;
+    }
+
+    public Subject(String name) {
+        this.name = name;
+    }
+
+    public Subject(String name, Teacher teacher) {
+        this.name = name;
+        this.teacher = teacher;
+    }
+
+    public Subject() {}
+
     public Set<Student> getStudents() {
         return students;
     }
