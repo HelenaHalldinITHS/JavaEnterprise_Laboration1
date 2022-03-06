@@ -1,5 +1,6 @@
 package se.iths.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
@@ -24,7 +25,21 @@ public class Student {
             inverseJoinColumns=@JoinColumn(name="Subject_id", referencedColumnName="id"))
     private Set<Subject> subjects = new HashSet<>();
 
-    //@JsonbTransient
+    public Student(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Student() {}
+
+    public void addSubject(Subject subject){
+        subjects.add(subject);
+        subject.getStudents().add(this);
+    }
+
+    @JsonbTransient
     public Set<Subject> getSubjects() {
         return subjects;
     }
