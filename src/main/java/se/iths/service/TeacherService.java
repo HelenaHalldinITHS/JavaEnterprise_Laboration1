@@ -31,4 +31,10 @@ public class TeacherService {
         entityManager.remove(teacher.orElseThrow(IllegalArgumentException::new));
     }
 
+    public void updateTeacher(Teacher teacher, Long id) {
+        if (findTeacherById(id).isEmpty())
+            throw new IllegalArgumentException();
+        teacher.setId(id);
+        entityManager.merge(teacher);
+    }
 }

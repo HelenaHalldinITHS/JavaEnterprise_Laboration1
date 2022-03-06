@@ -95,8 +95,8 @@ http://localhost:8080/student-management-system/api/v1
         1. id is optional and will be generated automatically if not specified
 ```json
 {
-  "firstName": "Helena",
-  "lastName": "Halldin"
+  "firstName": "David",
+  "lastName": "Karlsson"
 }
 ```
 2. Find all teachers:
@@ -110,6 +110,19 @@ http://localhost:8080/student-management-system/api/v1
     - URL: http://localhost:8080/student-management-system/api/v1/teachers/{id}
         - replace {id} with the id of the teacher you want to delete
     - HTTP VERB: `DELETE`
+5. Update a teacher:
+    - URL: http://localhost:8080/student-management-system/api/v1/teachers/{id}
+       - (replace {id} with the id you are looking for)
+    - HTTP VERB: `PUT`
+    - Note: this is a full update where you replace all attributes.
+    - You have to send a teacher in JSON format.
+```json
+{
+   "firstName": "David",
+   "id": 1,
+   "lastName": "Karlsson"
+}
+```
 
 ### Managing subjects:
 1. Create a subject:

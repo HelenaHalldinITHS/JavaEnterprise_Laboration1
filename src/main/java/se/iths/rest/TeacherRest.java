@@ -48,6 +48,16 @@ public class TeacherRest {
        return Response.ok(teacher).build();
     }
 
+    @Path("{id}")
+    @PUT
+    public Response updateSubject(@PathParam("id") Long id, Teacher teacher) {
+        try {
+            teacherService.updateTeacher(teacher, id);
+        } catch (IllegalArgumentException e) {
+            throw new NotFoundException("A teacher with id " + teacher.getId() + " doesn't exist and therefor can't be updated");
+        }
+        return Response.ok(teacher).build();
+    }
 
     @Path("{id}")
     @DELETE
