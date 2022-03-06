@@ -1,16 +1,32 @@
-## LAB 1 - Java Enterprise Course
-### ABOUT:
-This is a school project (lab 1) made in the course Java Enterprise.
-It is a simple JAX-RS application that has one entity (student). Students can be added, deleted, updated and read.
+# LAB 1 - Java Enterprise Course
+## ABOUT:
+This is a school project (lab 1 + 2) made in the course Java Enterprise.
+It is a simple JAX-RS application that has three entities (student, Teacher, Subject).
 #####  STUDENT :
-A student has 5 attributes.
+A student has 6 attributes.
 1. id 
 2. firstName
 3. lastName
 4. phoneNumber
 5. email
+6. subjects
 
-### SET-UP:
+#### TEACHER:
+A teacher has 4 attributes.
+1. id
+2. firstName
+3. lastName
+4. subjects
+
+#### SUBJECT:
+A subject has 4 attributes.
+1. id
+2. name
+3. teacher
+4. students
+
+
+## SET-UP:
 1. Clone or Fork this projekt
 2. Download Payara to your local machine
 3. Add run-configuration:
@@ -22,10 +38,11 @@ A student has 5 attributes.
 Now you can use insomnia to send requests to the application.
 
 
-### ENDPOINTS:
+## ENDPOINTS:
 The URL for all endpoints starts with:
 http://localhost:8080/student-management-system/api/v1
 
+### Managing students:
 1. Create a student:
    - URL: http://localhost:8080/student-management-system/api/v1/students 
    - HTTP VERB: `PUT `
@@ -69,4 +86,62 @@ http://localhost:8080/student-management-system/api/v1
    - URL: http://localhost:8080/student-management-system/api/v1/students/{id} 
      - replace {id} with the id of the student you want to delete
    - HTTP VERB: `DELETE`
+
+### Managing teachers:
+1. Create a teacher:
+    - URL: http://localhost:8080/student-management-system/api/v1/teachers
+    - HTTP VERB: `POST`
+    - You have to send a teacher in JSON format.
+        1. id is optional and will be generated automatically if not specified
+```json
+{
+  "firstName": "Helena",
+  "lastName": "Halldin"
+}
+```
+2. Find all teachers:
+    - URL: http://localhost:8080/student-management-system/api/v1/teachers
+    - HTTP VERB: `GET`
+3. Find a teacher by id:
+    - URL: http://localhost:8080/student-management-system/api/v1/teachers/{id}
+        - replace {id} with the id you are looking for
+    - HTTP VERB: `GET`
+4. Delete a teacher:
+    - URL: http://localhost:8080/student-management-system/api/v1/teachers/{id}
+        - replace {id} with the id of the teacher you want to delete
+    - HTTP VERB: `DELETE`
+
+### Managing subjects:
+1. Create a subject:
+    - URL: http://localhost:8080/student-management-system/api/v1/subjects
+    - HTTP VERB: `POST`
+    - You have to send a subject in JSON format.
+        1. id is optional and will be generated automatically if not specified
+```json
+{
+  "name": "Java Enterprise"
+}
+```
+2. Find all subjects:
+    - URL: http://localhost:8080/student-management-system/api/v1/subjects
+    - HTTP VERB: `GET`
+3. Find a subject by id:
+    - URL: http://localhost:8080/student-management-system/api/v1/subjects/{id}
+        - replace {id} with the id you are looking for
+    - HTTP VERB: `GET`
+4. Update a subject:
+    - URL: http://localhost:8080/student-management-system/api/v1/subjects/{id}
+        - (replace {id} with the id you are looking for)
+    - HTTP VERB: `PUT`
+    - Note: this is a full update where you replace all attributes.
+    - You have to send a subject in JSON format.
+```json
+{
+  "name": "Databaser"
+}
+```
+5. Delete a subject:
+    - URL: http://localhost:8080/student-management-system/api/v1/subjects/{id}
+        - replace {id} with the id of the subject you want to delete
+    - HTTP VERB: `DELETE`
 
